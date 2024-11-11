@@ -214,6 +214,17 @@ app.put('/medicine-requests/update/:id', async (req, res) => {
     }
 });
 
+// Route to get all medicines
+app.get('/medicines', async (req, res) => {
+    try {
+        const medicines = await Medicine.findAll(); // Fetch all medicines
+        res.status(200).json(medicines); // Return as JSON
+    } catch (error) {
+        console.error('Error fetching medicines:', error);
+        res.status(500).json({ error: 'An error occurred while retrieving medicines.' });
+    }
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

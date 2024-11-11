@@ -1,36 +1,53 @@
-module.exports = (sequelize, DataTypes) => {
-    const Medicine = sequelize.define('Medicine', {
-      medicine_id: {
+// models/Medicine.js
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../db'); // Import the Sequelize instance
+
+class Medicine extends Model {}
+
+Medicine.init({
+    medicine_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true, // Auto-increment for primary key
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: { msg: 'Medicine name is required' },
-        },
-      },
-      description: {
+        autoIncrement: true,
+    },
+    name: {
         type: DataTypes.STRING,
         allowNull: true,
-      },
-      // Add other fields as necessary
-    }, {
-      tableName: 'medicines', // Specifies custom table name
-      timestamps: true, // Adds createdAt and updatedAt fields
-    });
-  
-    Medicine.associate = (models) => {
-      // Define a one-to-many relationship with MedicineRequest
-      Medicine.hasMany(models.MedicineRequest, {
-        foreignKey: 'medicine_id',
-        as: 'medicineRequests', // Alias for accessing related MedicineRequests
-        onDelete: 'CASCADE', // Optional: cascade delete if Medicine is deleted
-        onUpdate: 'CASCADE', // Optional: cascade update if Medicine ID changes
-      });
-    };
-  
-    return Medicine;
-  };
+    },
+    category: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    dosage_form: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    unit_price: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true,
+    },
+    stock_quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    expiration_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    supplier_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+}, {
+    sequelize,
+    modelName: 'Medicine',
+    tableName: 'medicine', // Set to match the actual table name
+    timestamps: false, // Since no createdAt or updatedAt fields are defined in the table schema
+});
+
+// Define associations if necessary
+Medicine.associate = (models) => {
+    // Define associations here if needed, like with a Supplier model
+};
+
+module.exports = Medicine;
