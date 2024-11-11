@@ -5,6 +5,7 @@ const cors = require('cors');
 const db = require('./db');
 const Bed = require('./models/BedAssignment'); // Adjust the path based on your project structure
 const MedicineRequest = require('./models/MedicineRequest'); // Import the MedicineRequest model
+const Medicine = require('./models/Medicine'); // Adjust path to your model
 
 const app = express();
 const PORT = process.env.PORT || 3000;
